@@ -1,0 +1,47 @@
+# Python Flask - RESTful API and Web
+
+version: "3.2"
+
+services:
+
+  # API server
+  dash-api:
+    image: raylios.azurecr.io/dash-api:test-env
+    ports:
+      - "8082:8082"
+    environment:
+      - username=<secret>
+      - password=<secret>
+      - config=test
+    networks:
+      - dash-net
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+
+  # Web service
+  dash-web:
+    image: raylios.azurecr.io/dash-web:test-env
+    ports:
+      - "8083:8083"
+    environment:
+      - config=test
+    networks:
+      - dash-net
+    deploy:
+      mode: replicated
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+      restart_policy:
+        condition: on-failure
+
+networks:
+  dash-net:
+    driver: overlay

@@ -1,0 +1,56 @@
+# Python Flask - RESTful API and Web
+
+version: "3"
+
+services:
+
+  # API server
+  ai-agent:
+    image: raylios.azurecr.io/ai-agent:test-env
+    container_name: ai-agent
+    ports:
+      - "8080:8080"
+    environment:
+      - username=<secert>
+      - password=<secert>
+      - config=test
+    networks:
+      - ai-net
+
+  # Web service
+  ai-web:
+    image: raylios.azurecr.io/ai-web:test-env
+    container_name: ai-web
+    ports:
+      - "8081:8081"
+    environment:
+      - config=test
+    networks:
+      - ai-net
+
+  # CRM interface
+  crm-port:
+    image: raylios.azurecr.io/crm-port:test-env
+    container_name: crm-port
+    ports:
+      - "8084:8084"
+    environment:
+      - config=test
+    networks:
+      - ai-net
+
+  # Auto deployment container - remember to change volumes - home/<user-name>/...
+  watchtower:
+    image: v2tec/watchtower
+    container_name: ai-server-watch
+    restart: always
+    networks:
+      - ai-net
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/eyeon-user/.docker/config.json:/config.json
+    command: --interval 300 --cleanup ai-agent ai-web
+
+networks:
+  ai-net:
+    driver: bridge

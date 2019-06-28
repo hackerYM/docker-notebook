@@ -1,0 +1,61 @@
+# Set PIPELINES Environment variables: $ACR_LOGIN_SERVER, $ACR_USERNAME, $ACR_PASSWORD
+# Auto unit test app server, and build docker image. Finally, push docker image to registry.
+
+# Maintainer: Yen-Ming
+# Date: 2019-01-09
+
+# Registry: Azure Container Registry
+# Environment: Test & Demo Env
+
+options:
+  docker: true
+
+definitions:
+  steps:
+    - step: &Unit-test-step
+        name: Server Unit Test
+        script:
+          - export username=$SERVER_USERNAME
+          - export password=$SERVER_PASSWORD
+          - export config=test
+
+          - apk add --no-cache py-gevent
+          - pip install --default-timeout=100 --no-cache-dir -r requirements.txt
+          - pytest -v --durations=0 --cov-config=./tests/.coverage --cov=./app --cov-report term-missing
+
+pipelines:
+  branches:
+    master:
+      - step: *Unit-test-step
+      - step:
+          name: Deploy Demo Env
+          deployment: staging
+          trigger: manual
+          services:
+            - docker
+          script:
+            - export SERVER_NAME="dash-api"
+            - export TAG_ANME="demo-env"
+            - export IMAGE_NAME=$ACR_LOGIN_SERVER/$SERVER_NAME:$TAG_ANME
+
+            - docker build -t $IMAGE_NAME .
+            - docker login --username $ACR_USERNAME --password $ACR_PASSWORD $ACR_LOGIN_SERVER
+            - docker push $IMAGE_NAME
+            - docker logout $ACR_LOGIN_SERVER
+
+    feature/*:
+      - step: *Unit-test-step
+      - step:
+          name: Deploy Test Env
+          deployment: test
+          services:
+            - docker
+          script:
+            - export SERVER_NAME="dash-api"
+            - export TAG_ANME="test-env"
+            - export IMAGE_NAME=$ACR_LOGIN_SERVER/$SERVER_NAME:$TAG_ANME
+
+            - docker build -t $IMAGE_NAME .
+            - docker login --username $ACR_USERNAME --password $ACR_PASSWORD $ACR_LOGIN_SERVER
+            - docker push $IMAGE_NAME
+            - docker logout $ACR_LOGIN_SERVER

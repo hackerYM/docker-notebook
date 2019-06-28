@@ -4,34 +4,26 @@
 
 **Build, Manage and Secure Your Apps Anywhere. Your Way.**
 
-- Author: Yen-Ming
-- Date: 2018-12/19
 
-
-## Book & Tutorial
+## Tutorial
 
 - [Docker GitBook - 從入門到實踐](https://yeasy.gitbooks.io/docker_practice/content/)
 
 - [Docker 問答錄 (100 問)](https://blog.lab99.org/post/docker-2016-07-14-faq.html)
 
-- [awesome-docker](https://github.com/veggiemonk/awesome-docker)
-
 - [dockone.io 技術論壇](http://dockone.io/)
 
-## Knowledgement
+- [awesome-docker](https://github.com/veggiemonk/awesome-docker)
 
-- Offical
+
+## Knowledge
+
+- Official
+
+    - [Documents & Guides](https://docs.docker.com/get-started/)
+
+    - [Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
     
-    - [Website](https://www.docker.com/)
-
-    - [Document & Duides](https://docs.docker.com/get-started/)
-
-    - [Command-Line Interfaces](https://docs.docker.com/engine/reference/commandline/cli/)
-    
-    - [Docker Hub - Registry](https://hub.docker.com)
-
-    - [Docker Cloud - CI/CD](https://cloud.docker.com/)
-
 - Basic Concept
 
     - [10 張圖深入理解 Docker 容器和鏡像](http://dockone.io/article/783)
@@ -44,7 +36,7 @@
 
     - [docker-compose](https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-on-ubuntu-18-04)
     
-    - [completely uninstall docker](https://askubuntu.com/questions/935569/how-to-completely-uninstall-docker)
+    - [uninstall docker](https://askubuntu.com/questions/935569/how-to-completely-uninstall-docker)
     
 - MongoDB container
 
@@ -58,15 +50,13 @@
 
     - [Java Tomcat](https://steffan.cn/2017/02/10/how-to-build-a-Tomcat-image-with-Dockerfile-and-deploy-war/)
 
-    - [Linux Alpine](https://alpinelinux.org/)
-
 - CI / CD with Docker
 
-    - [使用 Docker Cloud 建構 Docker Image](https://ithelp.ithome.com.tw/articles/10191508)
+    - [Docker Cloud - Build Docker Image](https://ithelp.ithome.com.tw/articles/10191508)
     
-    - [Configure bitbucket-pipelines.yml with Bitbucket pipelines](https://confluence.atlassian.com/bitbucket/configure-bitbucket-pipelines-yml-792298910.html)
+    - [Bitbucket pipelines - Build and push a Docker Image](https://confluence.atlassian.com/bitbucket/build-and-push-a-docker-image-to-a-container-registry-884351903.html)
     
-    - [Watchtower: Automatic Updates for Docker Containers](https://www.ctl.io/developers/blog/post/watchtower-automatic-updates-for-docker-containers/)
+    - [Watchtower - Automatic Updates for Docker Containers](https://www.ctl.io/developers/blog/post/watchtower-automatic-updates-for-docker-containers/)
 
 - Docker SDK and API
 
@@ -74,10 +64,8 @@
     
     - [Docker SDK for Python](https://docker-py.readthedocs.io/en/stable/index.html)
 
-    - [docker stats in Docker CLI](https://docs.docker.com/engine/reference/commandline/stats/)
+    - [docker stats 命令源碼分析結果](https://my.oschina.net/jxcdwangtao/blog/828648)
 
-    - [docker stats 命令源碼分析結果 ](https://my.oschina.net/jxcdwangtao/blog/828648)
-    
 
 ## Useful Open Source
 
@@ -96,20 +84,20 @@ docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock \
 
 **A cross-platform curses-based system monitoring tool written in Python**
 
-1. termanal
+1. terminal
 
-```shell=
-docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock:ro \
-    --pid host --network host --name glances-terminal nicolargo/glances:stable
-```
+    ```shell=
+    docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock:ro \
+        --pid host --network host --name glances-terminal nicolargo/glances:stable
+    ```
 
 2. web
 
-```shell=
-docker run -d --restart="always" -p 8112:61208 -e GLANCES_OPT="-w" \
-    -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host \
-    --name eyeOn-system nicolargo/glances:stable
-```
+    ```shell=
+    docker run -d --restart="always" -p 8112:61208 -e GLANCES_OPT="-w" \
+        -v /var/run/docker.sock:/var/run/docker.sock:ro --pid host \
+        --name eyeOn-system nicolargo/glances:stable
+    ```
 
 ### docker-gc
 
@@ -119,147 +107,108 @@ docker run -d --restart="always" -p 8112:61208 -e GLANCES_OPT="-w" \
 
 - 環境變數 ```GRACE_PERIOD_SECONDS=0```（單位：秒），決定刪除多久時間沒被使用的容器。
 
-先查詢會被刪除對象。
+1. 先查詢會被刪除對象
 
-```shell=
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-    -e DRY_RUN=1 -e GRACE_PERIOD_SECONDS=0 --name docker-gc spotify/docker-gc
-```
+    ```shell=
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+        -e DRY_RUN=1 -e GRACE_PERIOD_SECONDS=0 --name docker-gc spotify/docker-gc
+    ```
 
-實際刪除容器和映象。
+2. 實際刪除容器和映象
 
-```shell=
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
-    -e GRACE_PERIOD_SECONDS=0 --name docker-gc spotify/docker-gc
-```
+    ```shell=
+    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+        -e GRACE_PERIOD_SECONDS=0 --name docker-gc spotify/docker-gc
+    ```
 
 ### docker-stress
 
-:::warning
-小心不要把 VM 測試到掛掉，參數一次不要條太高
-:::
+:bangbang: 小心不要把 VM 測試到掛掉，參數一次不要條太高。
 
-Options  | description
----- | -------
-- -t, --timeout N   | timeout after N seconds
-- -c, --cpu N       | spawn N workers spinning on sqrt()
-- -i, --io N        | spawn N workers spinning on sync()
-- -m, --vm N        | spawn N workers spinning on malloc()/free()
-- -m, --vm-bytes B  | malloc B bytes per vm worker (default is 256MB)
-- -d, --hdd N       | spawn N workers spinning on write()/unlink()
+| Options | description |
+| ------- | ----------- |
+| - -t, --timeout N   | timeout after N seconds |
+| - -c, --cpu N       | spawn N workers spinning on sqrt() |
+| - -i, --io N        | spawn N workers spinning on sync() |
+| - -m, --vm N        | spawn N workers spinning on malloc()/free() |
+| - -m, --vm-bytes B  | malloc B bytes per vm worker (default is 256MB) |
+| - -d, --hdd N       | spawn N workers spinning on write()/unlink() |
 
 ```shell=
 docker run --rm -it --name stess-test progrium/stress \
-    --cpu 24 --vm 24 --vm-bytes 512MB --io 16 --hdd 16 --timeout 60s
+    --cpu 4 --vm 4 --vm-bytes 512MB --io 8 --hdd 8 --timeout 60s
 ```
 
 ### portainer
 
 **A management UI for managing your Docker hosts or Docker Swarm clusters**
 
-- [Offical Document](https://portainer.readthedocs.io/en/stable/index.html)
+- [Official Document](https://portainer.readthedocs.io/en/stable/index.html)
 
 - [Easier Docker Management with Portainer](https://blog.ssdnodes.com/blog/tutorial-easier-docker-management-with-portainer/)
-
-- [Portainer Agent Deployment on Docker Swarm with User Namespace Remap](https://www.esentri.com/blog/2018/09/10/portainer-agent-deployment-on-docker-swarm-with-user-namespace-remap/)
 
 1. Generate a certificate and a key
 
     **Secure Portainer’s web interface using SSL**
 
-```shell=
-## create volumes file
-mkdir portainer
-cd portainer
-mkdir local-certs
-mkdir local-data
-
-## create SSL keys to use https
-cd local-certs
-openssl genrsa -out portainer.key 2048
-openssl ecparam -genkey -name secp384r1 -out portainer.key
-openssl req -new -x509 -sha256 -key portainer.key -out portainer.crt -days 3650
-```
+    ```shell=
+    ## create volumes file
+    mkdir portainer
+    cd portainer
+    mkdir local-certs
+    mkdir local-data
+    
+    ## create SSL keys to use https
+    cd local-certs
+    openssl genrsa -out portainer.key 2048
+    openssl ecparam -genkey -name secp384r1 -out portainer.key
+    openssl req -new -x509 -sha256 -key portainer.key -out portainer.crt -days 3650
+    ```
 
 2. Open VM's port 8090, 8091
 
 3. Creating a new overlay network in your Swarm cluster
 
-```shell=
-docker network create --driver overlay --attachable portainer_agent_network
-```
+    ```shell=
+    docker network create --driver overlay --attachable portainer_agent_network
+    ```
 
 4. Deploying the Agent as a global service in your cluster
 
-```shell=
-docker service create \
-    --name portainer_agent \
-    --limit-memory 128m \
-    --network portainer_agent_network \
-    -e AGENT_CLUSTER_ADDR=tasks.portainer_agent \
-    -e AGENT_PORT=8091 \
-    --mode global \
-    --constraint 'node.platform.os == linux' \
-    --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
-    --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes \
-    portainer/agent
-```
+    ```shell=
+    docker service create \
+        --name portainer_agent \
+        --limit-memory 128m \
+        --network portainer_agent_network \
+        -e AGENT_CLUSTER_ADDR=tasks.portainer_agent \
+        -e AGENT_PORT=8091 \
+        --mode global \
+        --constraint 'node.platform.os == linux' \
+        --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
+        --mount type=bind,src=//var/lib/docker/volumes,dst=/var/lib/docker/volumes \
+        portainer/agent
+    ```
 
 5. Deploying the Portainer instance as a service
 
-```shell=
-docker service create \
-    --name portainer \
-    --network portainer_agent_network \
-    --publish 8090:9000 \
-    --replicas=1 \
-    --constraint 'node.role == manager' \
-    --mount type=bind,src=//home/eyeon-user/portainer/local-certs,dst=/certs \
-    --mount type=bind,src=//home/eyeon-user/portainer/local-data,dst=/data \
-    portainer/portainer --ssl --sslcert /certs/portainer.crt --sslkey /certs/portainer.key \
-    -H "tcp://tasks.portainer_agent:8091" --tlsskipverify
-```
+    ```shell=
+    docker service create \
+        --name portainer \
+        --network portainer_agent_network \
+        --publish 8090:9000 \
+        --replicas=1 \
+        --constraint 'node.role == manager' \
+        --mount type=bind,src=//home/eyeon-user/portainer/local-certs,dst=/certs \
+        --mount type=bind,src=//home/eyeon-user/portainer/local-data,dst=/data \
+        portainer/portainer --ssl --sslcert /certs/portainer.crt --sslkey /certs/portainer.key \
+        -H "tcp://tasks.portainer_agent:8091" --tlsskipverify
+    ```
 
 6. Connect ```https://host-ip:8090``` and set admin account and password
 
-### swarmprom
-
-**A starter kit for Docker Swarm monitoring with Prometheus, Grafana, cAdvisor, Node Exporter, Alert Manager and Unsee.**
-
-- [Docker Swarm instrumentation with Prometheus](https://stefanprodan.com/2017/docker-swarm-instrumentation-with-prometheus/)
-
-1. Open VM's port 8086, 8087, 8088, 8089
-
-2. Clone repository and remove file
-
-```shell=
-git clone https://github.com/stefanprodan/swarmprom.git
-
-cd swarmprom
-rm docker-compose.yml test-compose.yml weave-compose.yml README.md
-```
-
-3. Create monitor.yml (in the Document Example)
-
-```shell=
-vim monitor.yml
-```
-
-4. Run the monitoring stack (set admin account and password)
-
-```shell=
-ADMIN_USER=<acc_name> \
-ADMIN_PASSWORD=<password> \
-SLACK_URL=https://hooks.slack.com/services/TOKEN \
-SLACK_CHANNEL=devops-alerts \
-SLACK_USER=alertmanager \
-docker stack deploy -c monitor.yml monitor
-```
-
-
 ### watchtower
 
-**A process for watching your Docker containers and automatically restarting them whenever their base image is refreshed.**
+**Watching your Docker containers and automatically restarting them whenever their base image is refreshed.**
 
 If pulling images from private Docker registries, supply registry authentication credentials with the environment variables REPO_USER and REPO_PASS or by mounting the host's docker config file into the container.
 
@@ -529,15 +478,14 @@ docker-machine scp -d <file-name> <machine-name>:/home/docker/
 
 - First Step on Docker Swarm
 
-:::success
-在建立叢集前，如果開啟了防火牆，請確認三臺主機的防火牆能讓 swarm 需求的埠開放，需要開啟主機之間的埠，以下埠必須可用。
+:bangbang:  在建立叢集前，請確認三臺主機的防火牆能讓 swarm 需求的埠開放，需要開啟主機之間的埠，以下埠必須可用。
 
 - 2377：TCP埠2377，用於叢集管理通訊
 
 - 7946：TCP和UDP埠7946，用於節點之間的通訊
 
 - 4789：TCP和UDP埠4789，用於覆蓋網路流量 
-:::
+
 
 ```shell=
 ## Manager Node - initialize a swarm (default port is 2377)
@@ -598,10 +546,6 @@ docker service create --name=viz --publish=8080:8080/tcp \
 
 - Docker Stack
 
-    - [Compose file version 3 reference](https://docs.docker.com/compose/compose-file/)
-
-    - [Docker 視覺化與管理工具](https://tw.saowen.com/a/10699dd4d8e9813a69424a87b9d72c8362dbd44d718a7b5130c6649fb7098734)
-
 ```shell=
 ## Deploy a new stack or update an existing stack
 docker stack -c <file-name.yml> <stack-name>
@@ -615,11 +559,9 @@ docker stack ps <stack-name>
 docker stack rm <stack-name>
 ```
 
-- Configure an external load balancer and using the routing mesh
+- Configure an external load balance and using the routing mesh
 
 ![](https://i.imgur.com/X8o6RpF.png)
-
-
 
 
 ## Document Example
@@ -632,648 +574,331 @@ Dockerfile 是一個文本文件，其內包含了一條條的指令 (Instructio
 
 1. Python Flask
 
-```Dockerfile=
-# 使用官方的 Python 執行環境作為基本的 Docker 影像
-FROM python:alpine3.7
-
-# 維護者： docker_user <docker_user at email.com> (@docker_user)
-MAINTAINER yenming yenming@raylios.com
-
-# 建立檔案工作區
-RUN mkdir -p /usr/src/app  && \
-    mkdir -p /var/log/gunicorn
-
-# 設定工作目錄為 /usr/src/app
-WORKDIR /usr/src/app
-
-# 複製目前目錄下的內容, 放進 Docker 容器中的 /usr/src/app
-COPY . /usr/src/app
-
-# 安裝 requirements.txt 中所列的必要套件, 並延長安裝時間
-RUN pip install --default-timeout=100 --no-cache-dir gunicorn && \
-    pip install --default-timeout=100 --no-cache-dir -r requirements.txt
-
-# 讓 80 連接埠可以從 Docker 容器外部存取
-ENV PORT 80
-EXPOSE 80
-
-# 當 Docker 容器啟動時, 自動執行 ai-raylios.py
-# Gunicorn 是一個 Python WSGI Unix - http web service, 開啟2個 worker
-CMD ["/usr/local/bin/gunicorn", "-w", "2", "-b", ":80", "ai-raylios:app"]
-
-```
+    ```Dockerfile=
+    # 使用官方的 Python 執行環境作為基本的 Docker 影像
+    FROM python:alpine3.7
+    
+    # 維護者： docker_user <docker_user at email.com> (@docker_user)
+    MAINTAINER yenming yenming@raylios.com
+    
+    # 建立檔案工作區
+    RUN mkdir -p /usr/src/app  && \
+        mkdir -p /var/log/gunicorn
+    
+    # 設定工作目錄為 /usr/src/app
+    WORKDIR /usr/src/app
+    
+    # 複製目前目錄下的內容, 放進 Docker 容器中的 /usr/src/app
+    COPY . /usr/src/app
+    
+    # 安裝 requirements.txt 中所列的必要套件, 並延長安裝時間
+    RUN pip install --default-timeout=100 --no-cache-dir gunicorn && \
+        pip install --default-timeout=100 --no-cache-dir -r requirements.txt
+    
+    # 讓 80 連接埠可以從 Docker 容器外部存取
+    ENV PORT 80
+    EXPOSE 80
+    
+    # 當 Docker 容器啟動時, 自動執行 ai-raylios.py
+    # Gunicorn 是一個 Python WSGI Unix - http web service, 開啟 2 個 worker
+    CMD ["/usr/local/bin/gunicorn", "-w", "2", "-b", ":80", "ai-raylios:app"]
+    
+    ```
 
 2. Java Tomcat
 
-```Dockerfile=
-# Pull base image
-From tomcat:9-jre8-alpine
+    ```Dockerfile=
+    # Pull base image
+    From tomcat:9-jre8-alpine
+    
+    # Maintainer
+    MAINTAINER "ming yenming@raylios.com"
+    
+    # set Env parameter
+    ENV server_war_file=cloudtalk-acs-mongo##3.05.05.45.war
+    
+    # Copy to images tomcat path
+    ADD ${server_war_file} /usr/local/tomcat/webapps/
+    
+    CMD ["catalina.sh", "run"]
+    ```
 
-# Maintainer
-MAINTAINER "ming yenming@raylios.com"
-
-# set Env parameter
-ENV server_war_file=cloudtalk-acs-mongo##3.05.05.45.war
-
-# Copy to images tomcat path
-ADD ${server_war_file} /usr/local/tomcat/webapps/
-
-CMD ["catalina.sh", "run"]
-```
-
-3. Tomcat https
+3. Java Tomcat - Https
 
     [docker tomcat keytool 添加 ssl 認證](http://blog.51cto.com/mannerwang/1857447)
-
-- tomcat-key
-
-```shell=
-## keytool 生成 .keystore，密碼及關鍵信息請自行補足
-keytool -genkey -alias tomact -keyalg RSA -keystore ./.tomcat-key \
-        -storepass raylios -validity 3650
-        
-## 有效期10年，查看證書信息，需要輸入密碼
-keytool -list -v -keystore ./.tomcat-key -storepass raylios
-```
-
-- tomcat-users.xml
-
-    **修改部份的文件**
-
-```xml=
-<tomcat-users>
-
-  <role rolename="manager-gui"/>
-  <role rolename="admin-gui"/>
-  <user username="<secret>" password="<secret>" roles="manager-gui,admin-gui"/>
-
-</tomcat-users>
-```
-
-- server.xml
-
-    **修改部份的文件**
-
-```xml=
-<!-- Define a SSL HTTP/1.1 Connector on port 8443
-         This connector uses the BIO implementation that requires the JSSE
-         style configuration. When using the APR/native implementation, the
-         OpenSSL style configuration is required as described in the APR/native
-         documentation -->
     
-    <Connector port="8081" protocol="org.apache.coyote.http11.Http11Protocol"
-               maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
-               clientAuth="false" sslProtocol="TLS" 
-	       keystoreFile="/usr/local/tomcat/conf/.tomcat-key" keystorePass="raylios"/>
-```
+    - tomcat-key
+    
+        ```shell=
+        ## keytool 生成 .keystore，密碼及關鍵信息請自行補足
+        keytool -genkey -alias tomact -keyalg RSA -keystore ./.tomcat-key \
+                -storepass raylios -validity 3650
+                
+        ## 有效期10年，查看證書信息，需要輸入密碼
+        keytool -list -v -keystore ./.tomcat-key -storepass raylios
+        ```
 
-- Dockerfile
+    - tomcat-users.xml
+    
+        **修改部份的文件**
+    
+        ```xml=
+        <tomcat-users>
+        
+          <role rolename="manager-gui"/>
+          <role rolename="admin-gui"/>
+          <user username="<secret>" password="<secret>" roles="manager-gui,admin-gui"/>
+        
+        </tomcat-users>
+        ```
 
-```Dockerfile=
-FROM tomcat:7-jre8-alpine
+    - server.xml
+    
+        **修改部份的文件**
+    
+        ```xml=
+        <!-- Define a SSL HTTP/1.1 Connector on port 8443
+                 This connector uses the BIO implementation that requires the JSSE
+                 style configuration. When using the APR/native implementation, the
+                 OpenSSL style configuration is required as described in the APR/native
+                 documentation -->
+            
+            <Connector port="8081" protocol="org.apache.coyote.http11.Http11Protocol"
+                       maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
+                       clientAuth="false" sslProtocol="TLS" 
+                   keystoreFile="/usr/local/tomcat/conf/.tomcat-key" keystorePass="raylios"/>
+        ```
 
-RUN apk add --no-cache nano
-
-COPY ["tomcat-users.xml", ".tomcat-key", "server.xml", "./conf/"]
-
-EXPOSE 8080 8081
-```
+    - Dockerfile
+    
+        ```Dockerfile=
+        FROM tomcat:7-jre8-alpine
+        
+        RUN apk add --no-cache nano
+        
+        COPY ["tomcat-users.xml", ".tomcat-key", "server.xml", "./conf/"]
+        
+        EXPOSE 8080 8081
+        ```
 
 4. Go server
 
-- Dockerfile
+    - Dockerfile
+    
+        ```Dockerfile=
+        #FROM ubuntu:18.04
+        FROM alpine:3.8
+        
+        MAINTAINER yenming yenming@raylios.com
+        
+        RUN mkdir -p /home/eyeon-user
+        COPY . /home/eyeon-user
+        
+        WORKDIR /home/eyeon-user/servers
+        
+        #RUN apt-get update \
+        # && apt-get install -y curl \
+        # && apt-get install -y rsyslog
+        
+        RUN apk add --no-cache libc6-compat rsyslog curl \
+         && rm -rf /var/cache/apk/*
+        
+        CMD ["./cserver"]
+        ```
 
-```Dockerfile=
-#FROM ubuntu:18.04
-FROM alpine:3.8
+    - cserver
+    
+        ```sequence=
+        #!/bin/sh
+        # Auto Start Servers:
+        # DVR(mediaGW), File servers need to connect to Azure Blob
+        
+        pubip=$(curl v4.ifconfig.co)
+        LOCAL_IP=$pubip
+        PACKAGE_PATH=/home/eyeon-user/servers/
+        
+        MASTER_URL="http://23.100.89.3:8082"
+        
+        MEDIAGW_URL="http://$LOCAL_IP:8804"
+        MEDIAGW_PORT=8804
+        MEDIAGW_KEY_PATH=/home/eyeon-user/servers/keys/key_mg1
+        
+        # start syslog
+        /usr/sbin/rsyslogd
+        
+        # run MediaGW
+        cd /home/eyeon-user/servers/mediaGW
+        commandStr="./mediaGateway -k $MEDIAGW_KEY_PATH -m $MASTER_URL -p :$MEDIAGW_PORT -u $MEDIAGW_URL; exec bash"
+        sh -c "$commandStr"
+        
+        exit
+        ```
 
-MAINTAINER yenming yenming@raylios.com
+5. Smaller Python Image
 
-RUN mkdir -p /home/eyeon-user
-COPY . /home/eyeon-user
-
-WORKDIR /home/eyeon-user/servers
-
-#RUN apt-get update \
-# && apt-get install -y curl \
-# && apt-get install -y rsyslog
-
-RUN apk add --no-cache libc6-compat rsyslog curl \
- && rm -rf /var/cache/apk/*
-
-CMD ["./cserver"]
-```
-
-- cserver
-
-```sequence=
-#!/bin/sh
-# Auto Start Servers:
-# DVR(mediaGW) , File servers need to connect to Azure Blob
-
-pubip=$(curl v4.ifconfig.co)
-LOCAL_IP=$pubip
-PACKAGE_PATH=/home/eyeon-user/servers/
-
-MASTER_URL="http://23.100.89.3:8082"
-
-MEDIAGW_URL="http://$LOCAL_IP:8804"
-MEDIAGW_PORT=8804
-MEDIAGW_KEY_PATH=/home/eyeon-user/servers/keys/key_mg1
-
-# start syslog
-/usr/sbin/rsyslogd
-
-# run MediaGW
-cd /home/eyeon-user/servers/mediaGW
-commandStr="./mediaGateway -k $MEDIAGW_KEY_PATH -m $MASTER_URL  -p :$MEDIAGW_PORT -u $MEDIAGW_URL; exec bash"
-sh -c "$commandStr"
-
-exit
-```
-
-5. Simple Python
-
-```Dockerfile=
-FROM alpine:3.8
-
-RUN apk add --no-cache python3 && \
-    python3 -m ensurepip && \
-    rm -r /usr/lib/python*/ensurepip && \
-    pip3 install --upgrade pip setuptools && \
-    if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
-    if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
-    rm -r /root/.cache
-```
+    ```Dockerfile=
+    FROM alpine:3.8
+    
+    RUN apk add --no-cache python3 && \
+        python3 -m ensurepip && \
+        rm -r /usr/lib/python*/ensurepip && \
+        pip3 install --upgrade pip setuptools && \
+        if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
+        if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
+        rm -r /root/.cache
+    ```
 
 ### Docker Compose
 
 **Example**
 
-1. ai-server
+1. Python server
 
-```yaml=
-# ai-server-compose.yml
-version: "3"
-
-services:
-  
-  # api server 
-  ai-agent:
-    image: raylios.azurecr.io/ai-agent:test-env
-    container_name: ai-agent
-    ports:
-      - "8080:8080"
-    environment:
-      - username=<secert>
-      - password=<secert>
-      - config=test
+    ```yaml=
+    version: "3"
+    
+    services:
+      
+      # API server 
+      ai-agent:
+        image: raylios.azurecr.io/ai-agent:test-env
+        container_name: ai-agent
+        ports:
+          - "8080:8080"
+        environment:
+          - username=<secert>
+          - password=<secert>
+          - config=test
+        networks:
+          - ai-net
+    
+      # Web service
+      ai-web:
+        image: raylios.azurecr.io/ai-web:test-env
+        container_name: ai-web
+        ports:
+          - "8081:8081"
+        environment:
+          - config=test
+        networks:
+          - ai-net
+            
+      # CRM interface
+      crm-port:
+        image: raylios.azurecr.io/crm-port:test-env
+        container_name: crm-port
+        ports:
+          - "8084:8084"
+        environment:
+          - config=test
+        networks:
+          - ai-net
+    
+      # Auto deployment container - remember to change volumes - home/<user-name>/...
+      watchtower:
+        image: v2tec/watchtower
+        container_name: ai-server-watch
+        restart: always
+        networks:
+          - ai-net
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /home/eyeon-user/.docker/config.json:/config.json
+        command: --interval 300 --cleanup ai-agent ai-web
+    
     networks:
-      - ai-net
+      ai-net:
+        driver: bridge
+    ```
 
-  # web service
-  ai-web:
-    image: raylios.azurecr.io/ai-web:test-env
-    container_name: ai-web
-    ports:
-      - "8081:8081"
-    environment:
-      - config=test
+2. go-server
+
+    ```yaml=
+    version: "2"
+    
+    services:
+    
+      file-blob:
+        image: raylios/file-blob
+        container_name: file-blob
+        restart: always
+        build:
+          context: fileBlob/
+        networks:
+          - go-server
+        ports:
+          - "8805:8805"
+    
+      media-gw:
+        image: raylios/media-gw
+        container_name: media-gw
+        restart: always
+        build:
+          context: mediaGateway/
+        networks:
+          - go-server
+        ports:
+          - "8804:8804"
+    
     networks:
-      - ai-net
-        
-  # crm interface
-  crm-port:
-    image: raylios.azurecr.io/crm-port:test-env
-    container_name: crm-port
-    ports:
-      - "8084:8084"
-    environment:
-      - config=test
-    networks:
-      - ai-net
-
-  # auto deployment container - remember to change volumes - home/<user-name>/...
-  watchtower:
-    image: v2tec/watchtower
-    container_name: ai-server-watch
-    restart: always
-    networks:
-      - ai-net
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/eyeon-user/.docker/config.json:/config.json
-    command: --interval 300 --cleanup ai-agent ai-web
-
-networks:
-  ai-net:
-    driver: bridge
-```
-
-2. dash-server
-
-```yaml=
-version: "3"
-
-services:
-  
-  # api server 
-  dash-api:
-    image: index.docker.io/raylioscloud/dash-api:demo-env
-    container_name: dash-api
-    restart: always
-    networks:
-      - dash-server
-    ports:
-      - "8080:8080"
-
-  # web service
-  dash-web:
-    image: index.docker.io/raylioscloud/dash-web:demo-env
-    container_name: dash-web
-    restart: always
-    networks:
-      - dash-server
-    ports:
-      - "8081:8081"
-    depends_on:
-      - dash-api
-
-  # container auto deployment - remember to change home/<user-name>
-  watchtower:
-    image: v2tec/watchtower
-    container_name: dash-watch
-    restart: always
-    networks:
-      - dash-server
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /home/eyeon-user/.docker/config.json:/config.json
-    command: --interval 300 --cleanup dash-api dash-web
-
-networks:
-  dash-server:
-    driver: bridge
-```
-3. go-server
-
-```yaml=
-version: "2"
-
-services:
-
-  file-blob:
-    image: raylios/file-blob
-    container_name: file-blob
-    restart: always
-    build:
-      context: fileBlob/
-    networks:
-      - go-server
-    ports:
-      - "8805:8805"
-
-  media-gw:
-    image: raylios/media-gw
-    container_name: media-gw
-    restart: always
-    build:
-      context: mediaGateway/
-    networks:
-      - go-server
-    ports:
-      - "8804:8804"
-
-networks:
-
-  go-server:
-    driver: bridge
-```
+      go-server:
+        driver: bridge
+    ```
 
 ### Docker Stack
 
-1. dash-server
+1. Python server
 
-```yaml=
-# dash-server-stack.yml
-# dash-server-stack.yml
-version: "3.2"
-
-services:
-  
-  # api server 
-  dash-api:
-    image: raylios.azurecr.io/dash-api:test-env
-    ports:
-      - "8082:8082"
-    environment:
-      - username=<secret>
-      - password=<secret>
-      - config=test
+    ```yaml=
+    version: "3.2"
+    
+    services:
+      
+      # API server 
+      dash-api:
+        image: raylios.azurecr.io/dash-api:test-env
+        ports:
+          - "8082:8082"
+        environment:
+          - username=<secret>
+          - password=<secret>
+          - config=test
+        networks:
+          - dash-net
+        deploy:
+          mode: replicated 
+          replicas: 1
+          update_config:
+            parallelism: 1
+            delay: 5s
+          restart_policy:
+            condition: on-failure
+    
+      # Web service
+      dash-web:
+        image: raylios.azurecr.io/dash-web:test-env
+        ports:
+          - "8083:8083"
+        environment:
+          - config=test
+        networks:
+          - dash-net
+        deploy:
+          mode: replicated
+          replicas: 1
+          update_config:
+            parallelism: 1
+            delay: 5s
+          restart_policy:
+            condition: on-failure
+    
     networks:
-      - dash-net
-    deploy:
-      mode: replicated 
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 5s
-      restart_policy:
-        condition: on-failure
+      dash-net:
+        driver: overlay
+    ```
 
-  # web service
-  dash-web:
-    image: raylios.azurecr.io/dash-web:test-env
-    ports:
-      - "8083:8083"
-    environment:
-      - config=test
-    networks:
-      - dash-net
-    deploy:
-      mode: replicated
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 5s
-      restart_policy:
-        condition: on-failure
-
-networks:
-  dash-net:
-    driver: overlay
-```
-
-2. ai-server
-
-```yaml=
-# ai-server-stack.yml
-version: "3.2"
-
-services:
-  
-  # api server 
-  ai-agent:
-    image: raylioscloud/ai-agent:test-env
-    ports:
-      - "8080:8080"
-    environment:
-      - username=<secret>
-      - password=<secret>
-      - config=test
-    networks:
-      - ai-net
-    deploy:
-      mode: replicated
-      replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 5s
-      restart_policy:
-        condition: on-failure
-
-  # web service
-  ai-web:
-    image: raylioscloud/ai-web:test-env
-    ports:
-      - "8081:8081"
-    environment:
-      - config=test
-    networks:
-      - ai-net
-    deploy:
-      mode: replicated
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 5s
-      restart_policy:
-        condition: on-failure
-        
-  # crm interface
-  crm-port:
-    image: raylioscloud/crm-port:test-env
-    ports:
-      - "8084:8084"
-    environment:
-      - config=test
-    networks:
-      - ai-net
-    deploy:
-      mode: replicated
-      replicas: 1
-      update_config:
-        parallelism: 1
-        delay: 5s
-      restart_policy:
-        condition: on-failure
-
-networks:
-  ai-net:
-    driver: overlay
-```
-
-3. monitor
-
-```yaml=
-# monitor.yml
-version: "3.3"
-
-networks:
-  monitor-net:
-    driver: overlay
-    attachable: true
-
-volumes:
-    prometheus: {}
-    grafana: {}
-    alertmanager: {}
-
-configs:
-  caddy_config:
-    file: ./caddy/Caddyfile
-  node_rules:
-    file: ./prometheus/rules/swarm_node.rules.yml
-  task_rules:
-    file: ./prometheus/rules/swarm_task.rules.yml
-
-services:
-
-  cadvisor:
-    image: google/cadvisor
-    networks:
-      - monitor-net
-    command: -logtostderr -docker_only
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /:/rootfs:ro
-      - /var/run:/var/run
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    deploy:
-      mode: global
-      resources:
-        limits:
-          memory: 64M
-        reservations:
-          memory: 32M
-
-  grafana:
-    image: stefanprodan/swarmprom-grafana:5.0.1
-    networks:
-      - monitor-net
-    environment:
-      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
-      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-      - GF_USERS_ALLOW_SIGN_UP=false
-      #- GF_SERVER_ROOT_URL=${GF_SERVER_ROOT_URL:-localhost}
-      #- GF_SMTP_ENABLED=${GF_SMTP_ENABLED:-false}
-      #- GF_SMTP_FROM_ADDRESS=${GF_SMTP_FROM_ADDRESS:-grafana@test.com}
-      #- GF_SMTP_FROM_NAME=${GF_SMTP_FROM_NAME:-Grafana}
-      #- GF_SMTP_HOST=${GF_SMTP_HOST:-smtp:25}
-      #- GF_SMTP_USER=${GF_SMTP_USER}
-      #- GF_SMTP_PASSWORD=${GF_SMTP_PASSWORD}
-    volumes:
-      - grafana:/var/lib/grafana
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      resources:
-        limits:
-          memory: 64M
-        reservations:
-          memory: 32M
-
-  alertmanager:
-    image: stefanprodan/swarmprom-alertmanager:v0.14.0
-    networks:
-      - monitor-net
-    environment:
-      - SLACK_URL=${SLACK_URL:-https://hooks.slack.com/services/TOKEN}
-      - SLACK_CHANNEL=${SLACK_CHANNEL:-general}
-      - SLACK_USER=${SLACK_USER:-alertmanager}
-    command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
-      - '--storage.path=/alertmanager'
-    volumes:
-      - alertmanager:/alertmanager
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      resources:
-        limits:
-          memory: 64M
-        reservations:
-          memory: 32M
-
-  unsee:
-    image: cloudflare/unsee:v0.8.0
-    networks:
-      - monitor-net
-    environment:
-      - "ALERTMANAGER_URIS=default:http://alertmanager:9093"
-    deploy:
-      mode: replicated
-      replicas: 1
-
-  node-exporter:
-    image: stefanprodan/swarmprom-node-exporter:v0.15.2
-    networks:
-      - monitor-net
-    environment:
-      - NODE_ID={{.Node.ID}}
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-      - /etc/hostname:/etc/nodename
-    command:
-      - '--path.sysfs=/host/sys'
-      - '--path.procfs=/host/proc'
-      - '--collector.textfile.directory=/etc/node-exporter/'
-      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
-      # no collectors are explicitely enabled here, because the defaults are just fine,
-      # see https://github.com/prometheus/node_exporter
-      # disable ipvs collector because it barfs the node-exporter logs full with errors on my centos 7 vm's
-      - '--no-collector.ipvs'
-    deploy:
-      mode: global
-      resources:
-        limits:
-          memory: 64M
-        reservations:
-          memory: 32M
-
-  prometheus:
-    image: stefanprodan/swarmprom-prometheus:v2.2.0-rc.0
-    networks:
-      - monitor-net
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--web.console.libraries=/etc/prometheus/console_libraries'
-      - '--web.console.templates=/etc/prometheus/consoles'
-      - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention=24h'
-    volumes:
-      - prometheus:/prometheus
-    configs:
-      - source: node_rules
-        target: /etc/prometheus/swarm_node.rules.yml
-      - source: task_rules
-        target: /etc/prometheus/swarm_task.rules.yml
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
-
-  caddy:
-    image: stefanprodan/caddy
-    ports:
-      - "8086:3000"
-      - "8088:9090"
-      - "8089:9093"
-      - "8087:9094"
-    networks:
-      - monitor-net
-    environment:
-      - ADMIN_USER=${ADMIN_USER:-admin}
-      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
-    configs:
-      - source: caddy_config
-        target: /etc/caddy/Caddyfile
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - node.role == manager
-      resources:
-        limits:
-          memory: 64M
-        reservations:
-          memory: 32M
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000"]
-      interval: 5s
-      timeout: 1s
-      retries: 5
-```
-
-## Microservices CI / CD
-**Continuous Integration & Continous Delivery**
+## CI / CD in Docker
+**Continuous Integration & Continuous Delivery**
 
 ### Article
 
@@ -1281,12 +906,8 @@ services:
 
 2. [微服務架構 #1, WHY Microservices?](https://columns.chicken-house.net/2016/09/15/microservice-case-study-01/)
 
-3. [在旋轉拍賣 Carousell 一年看到的後端架構、挑戰與生活](https://medium.com/carousell-insider/%E5%9C%A8%E6%97%8B%E8%BD%89%E6%8B%8D%E8%B3%A3-carousell-%E4%B8%80%E5%B9%B4%E7%9C%8B%E5%88%B0%E7%9A%84%E5%BE%8C%E7%AB%AF%E6%9E%B6%E6%A7%8B-%E6%8C%91%E6%88%B0%E8%88%87%E7%94%9F%E6%B4%BB-a0a12ef90cc0)
-
 
 ### Bitbucket Pipeline
-
-1. Docker Image - bitbucket-pipelines.yml
 
 ```yaml=
 # Set PIPELINES Environment variables: $ACR_LOGIN_SERVER, $ACR_USERNAME, $ACR_PASSWORD
@@ -1352,7 +973,7 @@ pipelines:
             - docker logout $ACR_LOGIN_SERVER
 ```
 
-### Jenkins
+### TravisCI
 
 
 ## Troubleshooting
