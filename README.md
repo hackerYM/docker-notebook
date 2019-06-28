@@ -373,7 +373,7 @@ Docker Compose 是一個工具能夠執行多個 container，你可以使用 doc
 
 使用一個 Dockerfile 模板文件，可以讓用戶很方便的定義一個單獨的應用容器。然而，在日常工作中，經常會碰到需要多個容器相互配合來完成某項任務的情況。
 
-例如，要實現一個 Web 項目，除了 Web 服務容器本身，往往還需要再加上後端的數據庫服務容器，甚至還包括負載均衡容器等。
+例如，要實現一個 Web ，除了 Web 服務容器本身，往往要再加上後端的數據庫容器，甚至負載均衡容器等等。
 
 允許用戶通過一個單獨的 docker-compose.yml 模板文件 (YAML 格式)來定義一組相關聯的應用容器為一個項目 (project)。
 
@@ -474,17 +474,17 @@ docker-machine scp -d <file-name> <machine-name>:/home/docker/
 
     - [Use overlay networks](https://docs.docker.com/network/overlay/) / [Use bridge networks](https://docs.docker.com/network/bridge/)
     
-     - [What’s the Docker Swarm “–advertise-addr” ?](https://boxboat.com/2016/08/17/whats-docker-swarm-advertise-addr/)
+    - [What’s the Docker Swarm “–advertise-addr” ?](https://boxboat.com/2016/08/17/whats-docker-swarm-advertise-addr/)
 
 - First Step on Docker Swarm
 
-:bangbang:  在建立叢集前，請確認三臺主機的防火牆能讓 swarm 需求的埠開放，需要開啟主機之間的埠，以下埠必須可用。
-
-- 2377：TCP埠2377，用於叢集管理通訊
-
-- 7946：TCP和UDP埠7946，用於節點之間的通訊
-
-- 4789：TCP和UDP埠4789，用於覆蓋網路流量 
+    :bangbang:  在建立叢集前，請確認主機的防火牆能讓 swarm 需求的埠開放，需要開啟主機之間的埠，以下埠必須可用。
+    
+    - 2377：TCP埠2377，用於叢集管理通訊
+    
+    - 7946：TCP和UDP埠7946，用於節點之間的通訊
+    
+    - 4789：TCP和UDP埠4789，用於覆蓋網路流量 
 
 
 ```shell=
@@ -564,7 +564,7 @@ docker stack rm <stack-name>
 ![](https://i.imgur.com/X8o6RpF.png)
 
 
-## Document Example
+## Example
 
 ### Dockerfile
 
@@ -749,8 +749,6 @@ Dockerfile 是一個文本文件，其內包含了一條條的指令 (Instructio
     ```
 
 ### Docker Compose
-
-**Example**
 
 1. Python server
 
