@@ -46,7 +46,7 @@
 
 - Use Dockerfile build docker image
 
-    - [Python Flask](https://blog.gtwang.org/virtualization/docker-basic-tutorial/)
+    - [Python Flask](https://blog.igevin.info/posts/how-to-deploy-flask-apps/)
 
     - [Java Tomcat](https://steffan.cn/2017/02/10/how-to-build-a-Tomcat-image-with-Dockerfile-and-deploy-war/)
 
