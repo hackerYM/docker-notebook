@@ -1,6 +1,6 @@
 # Docker - Containers as a Service 
 
-###### tags `raylios` `container` `2019`
+###### tags `container` `2019`
 
 **Build, Manage and Secure Your Apps Anywhere. Your Way.**
 
