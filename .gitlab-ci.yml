@@ -1,0 +1,128 @@
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  GIT_DEPTH: 10
+  DOCKER_DRIVER: overlay2
+  CACHE_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_PATH:dev
+  BUILD_IMAGE_NAME: $CI_REGISTRY/$CI_PROJECT_PATH:$CI_COMMIT_REF_NAME
+
+  JUNIT_PATH: $CI_PROJECT_DIR/nosetests.xml
+  CODE_QUALITY_PATH: $CI_PROJECT_DIR/gl-code-quality-report.json
+  ARTIFACT_STORE_PATH: $CI_PROJECT_DIR/artifact-metadata.json
+
+.dev_env: &dev_env
+  variables:
+    GCP_PROJECT_ID: gcp-dev
+    ENVIRONMENT: dev
+  only:
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-alpha\.(0|[1-9][0-9]*)$/  # Tag - v1.0.0-alpha.0
+
+.stg_env: &stg_env
+  variables:
+    GCP_PROJECT_ID: gcp-staging
+    ENVIRONMENT: staging
+  only:
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-beta\.(0|[1-9][0-9]*)$/   # Tag - v1.0.0-beta.0
+
+.prd_env: &prd_env
+  variables:
+    GCP_PROJECT_ID: gcp-prod
+    ENVIRONMENT: prod
+  only:
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/  # Tag - v1.0.0
+
+.static_test: &static_test
+  stage: test
+  image: python:3.7-slim
+  script:
+    - pip3 install -q --no-cache-dir --upgrade pip flakehell safety
+    - (flakehell missed; echo;) | xargs pip3 install -q --no-cache-dir || if [ $? -le 1 ]; then echo "ok"; fi
+    - cat ./pipelines/requirements.txt | safety check --full-report --stdin
+    - flakehell plugins
+    - flakehell lint --format=gitlab --output-file $CODE_QUALITY_PATH
+  artifacts:
+    name: Code-Quality
+    when: always
+    reports:
+      codequality: $CODE_QUALITY_PATH
+
+.unit_test: &unit_test
+  stage: test
+  image: docker:stable
+  script:
+    - touch $JUNIT_PATH
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY &> /dev/null
+    - docker pull $CACHE_IMAGE_NAME
+    - docker build --cache-from $CACHE_IMAGE_NAME -f ./pipelines/service.dockerfile -t $BUILD_IMAGE_NAME .
+    - docker run -v "$JUNIT_PATH:/home/ming/nosetests.xml" --entrypoint ./pipelines/app-quality.sh $BUILD_IMAGE_NAME
+  artifacts:
+    name: Test-Report
+    when: always
+    reports:
+      junit: $JUNIT_PATH
+
+.build_artifact: &build_artifact
+  stage: build
+  image: docker:stable
+  script:
+    - touch $ARTIFACT_STORE_PATH
+    - apk add --no-cache --update jq yq
+    - sh ./pipelines/app-release.sh
+  artifacts:
+    name: Artifact-Metadata
+    when: always
+    paths:
+      - $ARTIFACT_STORE_PATH
+
+.deploy_service: &deploy_service
+  stage: deploy
+  image: google/cloud-sdk:alpine
+  script:
+    - echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
+    - apk add --no-cache --update jq yq
+    - sh ./pipelines/app-deploy.sh
+
+static_test:
+  <<: *static_test
+  except:
+    - development
+    - release
+    - master
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-alpha\.(0|[1-9][0-9]*)$/
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-beta\.(0|[1-9][0-9]*)$/
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/
+
+unit_test:
+  <<: *unit_test
+  only:
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-alpha\.(0|[1-9][0-9]*)$/
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)-beta\.(0|[1-9][0-9]*)$/
+    - /^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$/
+
+build:dev:
+  <<: *build_artifact
+  <<: *dev_env
+
+build:stg:
+  <<: *build_artifact
+  <<: *stg_env
+
+build:prd:
+  <<: *build_artifact
+  <<: *prd_env
+
+deploy:dev:
+  <<: *deploy_service
+  <<: *dev_env
+
+deploy:stg:
+  <<: *deploy_service
+  <<: *stg_env
+
+deploy:prd:
+  <<: *deploy_service
+  <<: *prd_env
+  when: manual

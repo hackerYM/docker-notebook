@@ -401,7 +401,7 @@ docker-compose -f ai-server-compose.yml down -v
 
 ### Docker Machine
 
-**install Docker Engine on virtual hosts, manage the hosts with docker-machine.**
+**Install Docker Engine on virtual hosts, manage the hosts with docker-machine.**
 
 - Install on Linux
 
@@ -526,7 +526,7 @@ docker-machine scp -d <file-name> <machine-name>:/home/docker/
     docker service rm <service-name>
     ```
     
-    - Docker Swarm Visualizer
+    - Visualization
     
     ```shell=
     docker service create --name=viz --publish=8080:8080/tcp \
@@ -534,7 +534,7 @@ docker-machine scp -d <file-name> <machine-name>:/home/docker/
         /run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer
     ```
     
-    - Docker Stack
+    - Deployment
     
     ```shell=
     ## Deploy a new stack or update an existing stack
@@ -657,15 +657,16 @@ Dockerfile 是一個文本文件，其內包含了一條條的指令 (Instructio
         EXPOSE 8080 8081
         ```
 
-### Orchestration
+### Cluster
 
 1. [Docker Compose](./docker-compose.yml)
 
 1. [Docker Stack](./docker-stack.yml)
 
-
 ### CI / CD
 
+1. [GitLab CI](./.gitlab-ci.yml)
+   
 1. [Bitbucket Pipeline](./bitbucket-pipelines.yml)
 
 
