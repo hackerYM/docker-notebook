@@ -1,10 +1,11 @@
 # Docker Notebook
 
-A container is a standard unit of software that packages up code and all its dependencies so the application
-runs quickly and reliably from one computing environment to another.
+> A container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. A Docker container image is a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings.
+
+_Source:_ [What is a Container?](https://www.docker.com/resources/what-container)
 
 
-## Tutorial
+## Tutorials
 
 - [Docker Practice](https://yeasy.gitbooks.io/docker_practice/content/)
 
@@ -343,6 +344,48 @@ docker system prune --all
 
 - [Raft Consensus Algorithm - Understandable Distributed Consensus](http://thesecretlivesofdata.com/raft/)
 
+### Docker Machine
+
+**Install Docker Engine on virtual hosts, manage the hosts with docker-machine.**
+
+- Install on Linux
+
+```shell=
+## Install virtualbox for create Docker Machine's driver
+sudo apt-get install virtualbox
+
+## Download the Docker Machine binary and extract it to your PATH.
+base=https://github.com/docker/machine/releases/download/v0.14.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+  
+## Check the installation by displaying the Machine version
+docker-machine version
+```
+- First Step on Docker Machine
+
+```shell=
+## Create machines, vm1, vm2, vm3
+docker-machine create --driver virtualbox vm1
+docker-machine create --driver virtualbox vm2
+docker-machine create --driver virtualbox vm3
+
+## List machines
+docker-machine ls
+
+## Control a machine
+docker-machine restart <machine-name>
+docker-machine start <machine-name>
+docker-machine stop <machine-name>
+docker-machine rm <machine-name>
+
+## Log into or run a command on a machine with SSH
+docker-machine ssh <machine-name>
+
+## Copy files from your local host to a machine
+docker-machine scp -d <file-name> <machine-name>:/home/docker/
+```
+
 ### Docker Compose
 
 **Defining and running multi-container Docker applications**
@@ -397,48 +440,6 @@ docker-compose -f ai-server-compose.yml logs -f
 
 ## Stops containers and removes container, network, volume, images(shut-down)
 docker-compose -f ai-server-compose.yml down -v
-```
-
-### Docker Machine
-
-**Install Docker Engine on virtual hosts, manage the hosts with docker-machine.**
-
-- Install on Linux
-
-```shell=
-## Install virtualbox for create Docker Machine's driver
-sudo apt-get install virtualbox
-
-## Download the Docker Machine binary and extract it to your PATH.
-base=https://github.com/docker/machine/releases/download/v0.14.0 &&
-  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
-  sudo install /tmp/docker-machine /usr/local/bin/docker-machine
-  
-## Check the installation by displaying the Machine version
-docker-machine version
-```
-- First Step on Docker Machine
-
-```shell=
-## Create machines, vm1, vm2, vm3
-docker-machine create --driver virtualbox vm1
-docker-machine create --driver virtualbox vm2
-docker-machine create --driver virtualbox vm3
-
-## List machines
-docker-machine ls
-
-## Control a machine
-docker-machine restart <machine-name>
-docker-machine start <machine-name>
-docker-machine stop <machine-name>
-docker-machine rm <machine-name>
-
-## Log into or run a command on a machine with SSH
-docker-machine ssh <machine-name>
-
-## Copy files from your local host to a machine
-docker-machine scp -d <file-name> <machine-name>:/home/docker/
 ```
 
 ### Docker Swarm
