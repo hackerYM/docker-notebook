@@ -1,19 +1,14 @@
-# Docker - Containers as a Service 
+# Docker Notebook
 
-###### tags `container` `2019`
-
-**Build, Manage and Secure Your Apps Anywhere. Your Way.**
+A container is a standard unit of software that packages up code and all its dependencies so the application
+runs quickly and reliably from one computing environment to another.
 
 
 ## Tutorial
 
-- [Docker GitBook - 從入門到實踐](https://yeasy.gitbooks.io/docker_practice/content/)
+- [Docker Practice](https://yeasy.gitbooks.io/docker_practice/content/)
 
-- [Docker 問答錄 (100 問)](https://blog.lab99.org/post/docker-2016-07-14-faq.html)
-
-- [dockone.io 技術論壇](http://dockone.io/)
-
-- [awesome-docker](https://github.com/veggiemonk/awesome-docker)
+- [Awesome Docker](https://github.com/veggiemonk/awesome-docker)
 
 
 ## Knowledge
@@ -67,13 +62,13 @@
     - [docker stats 命令源碼分析結果](https://my.oschina.net/jxcdwangtao/blog/828648)
 
 
-## Useful Open Source
+## Open Sources
 
 - [5 Docker Utilities You Should Know](https://blog.xebialabs.com/2017/05/18/5-docker-utilities-you-should-know/)
 
 ### ctop
 
-**Top-like interface for Docker Container metrics**
+Top-like interface for Docker Container metrics
 
 ```shell=
 docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock \
@@ -82,7 +77,7 @@ docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock \
 
 ### glances
 
-**A cross-platform curses-based system monitoring tool written in Python**
+A cross-platform curses-based system monitoring tool written in Python
 
 1. terminal
 
@@ -101,7 +96,7 @@ docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock \
 
 ### docker-gc
 
-**Docker garbage collection of containers and images**
+Docker garbage collection of containers and images
 
 - 環境變數 ```DRY_RUN=1``` ，在實際刪除之前，查詢可被刪除的容器和映象
 
@@ -123,7 +118,7 @@ docker run --rm -ti -v /var/run/docker.sock:/var/run/docker.sock \
 
 ### docker-stress
 
-:bangbang: 小心不要把 VM 測試到掛掉，參數一次不要條太高。
+:bangbang: 小心不要把機器測試到掛掉，參數一次不要條的太高
 
 | Options | description |
 | ------- | ----------- |
@@ -139,19 +134,19 @@ docker run --rm -it --name stess-test progrium/stress \
     --cpu 4 --vm 4 --vm-bytes 512MB --io 8 --hdd 8 --timeout 60s
 ```
 
-### portainer
+### Portainer
 
-**A management UI for managing your Docker hosts or Docker Swarm clusters**
+A management UI for managing your Docker hosts or Docker Swarm clusters
 
 - [Official Document](https://portainer.readthedocs.io/en/stable/index.html)
 
-- [Easier Docker Management with Portainer](https://blog.ssdnodes.com/blog/tutorial-easier-docker-management-with-portainer/)
+- [Portainer Tutorials](https://blog.ssdnodes.com/blog/tutorial-easier-docker-management-with-portainer/)
 
 1. Generate a certificate and a key
 
-    **Secure Portainer’s web interface using SSL**
-
     ```shell=
+    ## secure Portainer’s web interface using SSL
+   
     ## create volumes file
     mkdir portainer
     cd portainer
@@ -206,11 +201,12 @@ docker run --rm -it --name stess-test progrium/stress \
 
 6. Connect ```https://host-ip:8090``` and set admin account and password
 
-### watchtower
+### Watchtower
 
-**Watching your Docker containers and automatically restarting them whenever their base image is refreshed.**
+Watching your Docker containers and automatically restarting them whenever their base image is refreshed.
 
-If pulling images from private Docker registries, supply registry authentication credentials with the environment variables REPO_USER and REPO_PASS or by mounting the host's docker config file into the container.
+If pulling images from private Docker registries, supply registry authentication credentials by mounting
+the host's docker config file into the container.
 
 ```shell=
 docker run -d \
@@ -252,8 +248,6 @@ docker ps -as
 ## --name: Container's name, -p: Publish a container’s port(s) to the host,
 ## -d: Run container in background, -it: Keep STDIN open even if not attached
 docker run --name CONTAINER_NAME -p HOST_IP:INNER_IP -d -it SOURCE_IMAGE
-## example
-docker run --name acs -p 8080:8080 -d -it acs:latest 
 
 ## Run a command in a running container
 ## -it: Keep STDIN open even if not attached and Allocate a pseudo-TTY
@@ -302,11 +296,10 @@ docker volume inspect VOLUME_NAME
 ## Pull an image or a repository from a registry
 docker pull IMAGE_NAME[:TAG]
 
-## Log in to a Docker registry & Log out from a Docker registry
+## Log in to a cotainer registry
 docker login
-docker logout
 
-## Push an image or a repository to a registry -> have to login Docker
+## Push an image or a repository to a registry
 docker push IMAGE_NAME[:TAG]
 ```
 
@@ -314,7 +307,7 @@ docker push IMAGE_NAME[:TAG]
 
 - [Docker 學習與實踐 - 網絡篇](https://blog.waterstrong.me/docker-networking/)
 
-- [Dig Into Docker Bridge Network By iptables/ebtables](https://www.hwchiu.com/netfilter-eiptables-iii.html)
+- [Dig Into Docker Bridge Network](https://www.hwchiu.com/netfilter-eiptables-iii.html)
 
 ```shell=
 ## List networks
@@ -342,19 +335,13 @@ docker system prune --all
 ```
 
 
-## Cluster & Orchestration
+## Container Orchestration
 
-### Article
+### Articles
 
-1. [Compare Kubernetes vs Docker Swarm](https://platform9.com/blog/kubernetes-docker-swarm-compared/)
+- [Compare Kubernetes vs Docker Swarm](https://platform9.com/blog/kubernetes-docker-swarm-compared/)
 
-2. [巔峰對決之 Swarm、Kubernetes、Mesos](https://itw01.com/G6DIEY6.html)
-
-3. [Docker 编排工具最佳選擇是 swarm/kubernetes/Mesos ?](https://www.zhihu.com/question/55391506)
-
-4. [世界是 container 的，也是 microservice 的，但最終還是 serverless](https://hk.saowen.com/a/8c4a7cbf77b2d791cac127d2c7f7e65dd60362c9f5c01ee7e67fa6f0e142018d)
-
-5. [Raft Consensus Algorithm - Understandable Distributed Consensus](http://thesecretlivesofdata.com/raft/)
+- [Raft Consensus Algorithm - Understandable Distributed Consensus](http://thesecretlivesofdata.com/raft/)
 
 ### Docker Compose
 
@@ -458,27 +445,27 @@ docker-machine scp -d <file-name> <machine-name>:/home/docker/
 
 **Cluster management and orchestration features embedded in the Docker Engine**
 
-![](https://i.imgur.com/fobMffk.png)
+![Sample](https://i.imgur.com/fobMffk.png)
 
 1. [Docker Swarm 基本教學 - 從無到有 Docker-Swarm-Beginners-Guide](https://github.com/twtrubiks/docker-swarm-tutorial)
 
-2. [Docker Swarm 深入淺出 ](https://www.bookstack.cn/read/docker-swarm-guides/README.md)
+1. [Docker Swarm 深入淺出 ](https://www.bookstack.cn/read/docker-swarm-guides/README.md)
 
-3. [Docker 管理工具 - Swarm 部署記錄](https://hk.saowen.com/a/fd2b0303c8b64a7c9ae507500758032f52ac157e89f78124010ac54916f1d564)
+1. [Docker 管理工具 - Swarm 部署記錄](https://hk.saowen.com/a/fd2b0303c8b64a7c9ae507500758032f52ac157e89f78124010ac54916f1d564)
 
-4. [Bootstrapping a Docker Swarm Mode Cluster](https://semaphoreci.com/community/tutorials/bootstrapping-a-docker-swarm-mode-cluster)
+1. [Bootstrapping a Docker Swarm Mode Cluster](https://semaphoreci.com/community/tutorials/bootstrapping-a-docker-swarm-mode-cluster)
 
-5. Swarm - service communication
+1. Network communication between services
+
+    - Use [overlay](https://docs.docker.com/network/overlay/) and [bridge](https://docs.docker.com/network/bridge/) networks
 
     - [Use swarm mode routing mesh (負載平衡機制)](https://docs.docker.com/engine/swarm/ingress/)
-
-    - [Use overlay networks](https://docs.docker.com/network/overlay/) / [Use bridge networks](https://docs.docker.com/network/bridge/)
     
     - [What’s the Docker Swarm “–advertise-addr” ?](https://boxboat.com/2016/08/17/whats-docker-swarm-advertise-addr/)
 
-- First Step on Docker Swarm
+1. Open VM ports
 
-    :bangbang:  在建立叢集前，請確認主機的防火牆能讓 swarm 需求的埠開放，需要開啟主機之間的埠，以下埠必須可用。
+    :bangbang: 在建立叢集前，請確認主機的防火牆能讓 swarm 需求的埠開放，需要開啟主機之間的埠，以下埠必須可用。
     
     - 2377：TCP埠2377，用於叢集管理通訊
     
@@ -486,146 +473,139 @@ docker-machine scp -d <file-name> <machine-name>:/home/docker/
     
     - 4789：TCP和UDP埠4789，用於覆蓋網路流量 
 
+1. Set up machines
 
-```shell=
-## Manager Node - initialize a swarm (default port is 2377)
-docker swarm init
-docker swarm join-token worker
+    - Docker Node
 
-## Worker Node - add a worker to this swarm
-docker swarm join --token SWMTKN-1-6152hty2ge5tl7y8j2fw8qz0kf8n62b8jv7ah2dl654w0zydkl-etrc1wp5mzybiwpuzwh6eas7k 172.30.0.186:2377
+    ```shell=
+    ## Manager Node - initialize a swarm (default port is 2377)
+    docker swarm init
+    docker swarm join-token worker
+    
+    ## Worker Node - add a worker to this swarm
+    docker swarm join --token SWMTKN-1-6152hty2ge5tl7y8j2fw8qz0kf8n62b8jv7ah2dl654w0zydkl-etrc1wp5mzybiwpuzwh6eas7k 172.30.0.186:2377
+    
+    ## Manager Node - display system-wide information
+    docker info
+    
+    ## Manage Swarm nodes
+    docker node ls
+    docker node inspect --pretty <node-name>
+    
+    ## Demote nodes from manager / Promote nodes to manager in the swarm
+    docker node promote <node-name>
+    docker node demote <node-name>
+    ```
+    
+    - Docker Service
+    
+    ```shell=
+    ## Create a new service
+    docker service create --name=<service-name> -p 8080:80 --replicas 2 <image>
+    
+    ## List services / List the tasks of services
+    docker service ls
+    docker service ps <service-name>
+    
+    ## Display detailed information on one or more services
+    docker service inspect --pretty <service-name>
+    
+    ## Fetch the logs of a service or task
+    docker service logs -f <service-name>
+    docker service logs --no-task-ids --since <time> -f <service-name>
+    docker service logs --raw --since <time> -f <service-name>
+    
+    ## Scale up or down replicated services / Update a service
+    docker service scale <service-name>=<replicated-count>
+    docker service update <service-name>
+    
+    ## Revert changes to a service's configuration (scale, update ...)
+    docker service rollback <service-name>
+    
+    ## Remove one or more services
+    docker service rm <service-name>
+    ```
+    
+    - Docker Swarm Visualizer
+    
+    ```shell=
+    docker service create --name=viz --publish=8080:8080/tcp \
+        --constraint=node.role==manager --mount=type=bind,src=/var \
+        /run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer
+    ```
+    
+    - Docker Stack
+    
+    ```shell=
+    ## Deploy a new stack or update an existing stack
+    docker stack -c <file-name.yml> <stack-name>
+    
+    ## List stacks / List the tasks in the stack
+    docker stack ls <stack-name>
+    
+    docker stack ps <stack-name>
+    
+    ## Remove one or more stacks
+    docker stack rm <stack-name>
+    ```
 
-## Manager Node - display system-wide information
-docker info
+1. Configure an external load balance
 
-## Manage Swarm nodes
-docker node ls
-docker node inspect --pretty <node-name>
-
-## Demote nodes from manager / Promote nodes to manager in the swarm
-docker node promote <node-name>
-docker node demote <node-name>
-```
-
-- Docker Service
-
-```shell=
-## Create a new service
-docker service create --name=<service-name> -p 8080:80 --replicas 2 <image>
-
-## List services / List the tasks of services
-docker service ls
-docker service ps <service-name>
-
-## Display detailed information on one or more services
-docker service inspect --pretty <service-name>
-
-## Fetch the logs of a service or task
-docker service logs -f <service-name>
-docker service logs --no-task-ids --since <time> -f <service-name>
-docker service logs --raw --since <time> -f <service-name>
-
-## Scale up or down replicated services / Update a service
-docker service scale <service-name>=<replicated-count>
-docker service update <service-name>
-
-## Revert changes to a service's configuration (scale, update ...)
-docker service rollback <service-name>
-
-## Remove one or more services
-docker service rm <service-name>
-```
-
-- Docker Swarm Visualizer
-
-```shell=
-docker service create --name=viz --publish=8080:8080/tcp \
-    --constraint=node.role==manager --mount=type=bind,src=/var \
-    /run/docker.sock,dst=/var/run/docker.sock dockersamples/visualizer
-```
-
-- Docker Stack
-
-```shell=
-## Deploy a new stack or update an existing stack
-docker stack -c <file-name.yml> <stack-name>
-
-## List stacks / List the tasks in the stack
-docker stack ls <stack-name>
-
-docker stack ps <stack-name>
-
-## Remove one or more stacks
-docker stack rm <stack-name>
-```
-
-- Configure an external load balance and using the routing mesh
-
-![](https://i.imgur.com/X8o6RpF.png)
+    ![Sample](https://i.imgur.com/X8o6RpF.png)
 
 
-## Example
+## Examples
 
 ### Dockerfile
 
 Dockerfile 是一個文本文件，其內包含了一條條的指令 (Instruction)，每一條指令構建一層，因此每一條指令的內容，就是描述該層應當如何構建。
 
-[Dockerfile 指令詳解](https://yeasy.gitbooks.io/docker_practice/content/image/build.html)
-
 1. Python Flask
 
     ```Dockerfile=
-    # 使用官方的 Python 執行環境作為基本的 Docker 影像
-    FROM python:alpine3.7
+    FROM python:3.7-slim
+    WORKDIR home/ming
     
-    # 維護者： docker_user <docker_user at email.com> (@docker_user)
-    MAINTAINER yenming yenming@raylios.com
+    # update and install the system packages
     
-    # 建立檔案工作區
-    RUN mkdir -p /usr/src/app  && \
-        mkdir -p /var/log/gunicorn
+    RUN apt-get update && \
+        apt-get install -y curl gcc libcairo2-dev libmagic-dev && \
+        rm -rf /var/lib/apt/lists/*
     
-    # 設定工作目錄為 /usr/src/app
-    WORKDIR /usr/src/app
+    # download and install app dependencies
     
-    # 複製目前目錄下的內容, 放進 Docker 容器中的 /usr/src/app
-    COPY . /usr/src/app
+    COPY ["./pipelines/requirements.txt", "./pipelines/"]
+    RUN pip install --upgrade pip && \
+        pip install --no-cache-dir -r pipelines/requirements.txt
     
-    # 安裝 requirements.txt 中所列的必要套件, 並延長安裝時間
-    RUN pip install --default-timeout=100 --no-cache-dir gunicorn && \
-        pip install --default-timeout=100 --no-cache-dir -r requirements.txt
+    # give permission to script test file
     
-    # 讓 80 連接埠可以從 Docker 容器外部存取
-    ENV PORT 80
-    EXPOSE 80
+    COPY [".", "./"]
+    RUN ["chmod", "+x", "./pipelines/app-quality.sh"]
     
-    # 當 Docker 容器啟動時, 自動執行 ai-raylios.py
-    # Gunicorn 是一個 Python WSGI Unix - http web service, 開啟 2 個 worker
-    CMD ["/usr/local/bin/gunicorn", "-w", "2", "-b", ":80", "ai-raylios:app"]
+    # run the backend service
     
+    EXPOSE 8080
+    ENTRYPOINT ["./pipelines/app-run.sh"]
     ```
 
 2. Java Tomcat
 
     ```Dockerfile=
-    # Pull base image
     From tomcat:9-jre8-alpine
-    
-    # Maintainer
-    MAINTAINER "ming yenming@raylios.com"
-    
-    # set Env parameter
+    WORKDIR home/ming
+
     ENV server_war_file=cloudtalk-acs-mongo##3.05.05.45.war
     
     # Copy to images tomcat path
+
     ADD ${server_war_file} /usr/local/tomcat/webapps/
-    
     CMD ["catalina.sh", "run"]
     ```
 
 3. Java Tomcat - Https
 
-    [docker tomcat keytool 添加 ssl 認證](http://blog.51cto.com/mannerwang/1857447)
+    - [docker tomcat keytool 添加 ssl 認證](http://blog.51cto.com/mannerwang/1857447)
     
     - tomcat-key
     
@@ -640,8 +620,6 @@ Dockerfile 是一個文本文件，其內包含了一條條的指令 (Instructio
 
     - tomcat-users.xml
     
-        **修改部份的文件**
-    
         ```xml=
         <tomcat-users>
         
@@ -654,339 +632,53 @@ Dockerfile 是一個文本文件，其內包含了一條條的指令 (Instructio
 
     - server.xml
     
-        **修改部份的文件**
-    
         ```xml=
         <!-- Define a SSL HTTP/1.1 Connector on port 8443
-                 This connector uses the BIO implementation that requires the JSSE
-                 style configuration. When using the APR/native implementation, the
-                 OpenSSL style configuration is required as described in the APR/native
-                 documentation -->
-            
-            <Connector port="8081" protocol="org.apache.coyote.http11.Http11Protocol"
-                       maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
-                       clientAuth="false" sslProtocol="TLS" 
-                   keystoreFile="/usr/local/tomcat/conf/.tomcat-key" keystorePass="raylios"/>
+             This connector uses the BIO implementation that requires the JSSE
+             style configuration. When using the APR/native implementation, the
+             OpenSSL style configuration is required as described in the APR/native
+             documentation -->
+        
+        <Connector port="8081" protocol="org.apache.coyote.http11.Http11Protocol"
+               maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
+               clientAuth="false" sslProtocol="TLS" 
+               keystoreFile="/usr/local/tomcat/conf/.tomcat-key" keystorePass="raylios"/>
         ```
 
     - Dockerfile
     
         ```Dockerfile=
         FROM tomcat:7-jre8-alpine
-        
+        WORKDIR home/ming
+
         RUN apk add --no-cache nano
         
         COPY ["tomcat-users.xml", ".tomcat-key", "server.xml", "./conf/"]
-        
         EXPOSE 8080 8081
         ```
 
-4. Go server
+### Orchestration
 
-    - Dockerfile
-    
-        ```Dockerfile=
-        #FROM ubuntu:18.04
-        FROM alpine:3.8
-        
-        MAINTAINER yenming yenming@raylios.com
-        
-        RUN mkdir -p /home/eyeon-user
-        COPY . /home/eyeon-user
-        
-        WORKDIR /home/eyeon-user/servers
-        
-        #RUN apt-get update \
-        # && apt-get install -y curl \
-        # && apt-get install -y rsyslog
-        
-        RUN apk add --no-cache libc6-compat rsyslog curl \
-         && rm -rf /var/cache/apk/*
-        
-        CMD ["./cserver"]
-        ```
+1. [Docker Compose](./docker-compose.yml)
 
-    - cserver
-    
-        ```sequence=
-        #!/bin/sh
-        # Auto Start Servers:
-        # DVR(mediaGW), File servers need to connect to Azure Blob
-        
-        pubip=$(curl v4.ifconfig.co)
-        LOCAL_IP=$pubip
-        PACKAGE_PATH=/home/eyeon-user/servers/
-        
-        MASTER_URL="http://23.100.89.3:8082"
-        
-        MEDIAGW_URL="http://$LOCAL_IP:8804"
-        MEDIAGW_PORT=8804
-        MEDIAGW_KEY_PATH=/home/eyeon-user/servers/keys/key_mg1
-        
-        # start syslog
-        /usr/sbin/rsyslogd
-        
-        # run MediaGW
-        cd /home/eyeon-user/servers/mediaGW
-        commandStr="./mediaGateway -k $MEDIAGW_KEY_PATH -m $MASTER_URL -p :$MEDIAGW_PORT -u $MEDIAGW_URL; exec bash"
-        sh -c "$commandStr"
-        
-        exit
-        ```
-
-5. Smaller Python Image
-
-    ```Dockerfile=
-    FROM alpine:3.8
-    
-    RUN apk add --no-cache python3 && \
-        python3 -m ensurepip && \
-        rm -r /usr/lib/python*/ensurepip && \
-        pip3 install --upgrade pip setuptools && \
-        if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi && \
-        if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi && \
-        rm -r /root/.cache
-    ```
-
-### Docker Compose
-
-1. Python server
-
-    ```yaml=
-    version: "3"
-    
-    services:
-      
-      # API server 
-      ai-agent:
-        image: raylios.azurecr.io/ai-agent:test-env
-        container_name: ai-agent
-        ports:
-          - "8080:8080"
-        environment:
-          - username=<secert>
-          - password=<secert>
-          - config=test
-        networks:
-          - ai-net
-    
-      # Web service
-      ai-web:
-        image: raylios.azurecr.io/ai-web:test-env
-        container_name: ai-web
-        ports:
-          - "8081:8081"
-        environment:
-          - config=test
-        networks:
-          - ai-net
-            
-      # CRM interface
-      crm-port:
-        image: raylios.azurecr.io/crm-port:test-env
-        container_name: crm-port
-        ports:
-          - "8084:8084"
-        environment:
-          - config=test
-        networks:
-          - ai-net
-    
-      # Auto deployment container - remember to change volumes - home/<user-name>/...
-      watchtower:
-        image: v2tec/watchtower
-        container_name: ai-server-watch
-        restart: always
-        networks:
-          - ai-net
-        volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
-          - /home/eyeon-user/.docker/config.json:/config.json
-        command: --interval 300 --cleanup ai-agent ai-web
-    
-    networks:
-      ai-net:
-        driver: bridge
-    ```
-
-2. go-server
-
-    ```yaml=
-    version: "2"
-    
-    services:
-    
-      file-blob:
-        image: raylios/file-blob
-        container_name: file-blob
-        restart: always
-        build:
-          context: fileBlob/
-        networks:
-          - go-server
-        ports:
-          - "8805:8805"
-    
-      media-gw:
-        image: raylios/media-gw
-        container_name: media-gw
-        restart: always
-        build:
-          context: mediaGateway/
-        networks:
-          - go-server
-        ports:
-          - "8804:8804"
-    
-    networks:
-      go-server:
-        driver: bridge
-    ```
-
-### Docker Stack
-
-1. Python server
-
-    ```yaml=
-    version: "3.2"
-    
-    services:
-      
-      # API server 
-      dash-api:
-        image: raylios.azurecr.io/dash-api:test-env
-        ports:
-          - "8082:8082"
-        environment:
-          - username=<secret>
-          - password=<secret>
-          - config=test
-        networks:
-          - dash-net
-        deploy:
-          mode: replicated 
-          replicas: 1
-          update_config:
-            parallelism: 1
-            delay: 5s
-          restart_policy:
-            condition: on-failure
-    
-      # Web service
-      dash-web:
-        image: raylios.azurecr.io/dash-web:test-env
-        ports:
-          - "8083:8083"
-        environment:
-          - config=test
-        networks:
-          - dash-net
-        deploy:
-          mode: replicated
-          replicas: 1
-          update_config:
-            parallelism: 1
-            delay: 5s
-          restart_policy:
-            condition: on-failure
-    
-    networks:
-      dash-net:
-        driver: overlay
-    ```
-
-## CI / CD in Docker
-**Continuous Integration & Continuous Delivery**
-
-### Article
-
-1. [架構師觀點: 你需要什麼樣的 CI / CD](https://columns.chicken-house.net/2017/08/05/what-cicd-do-you-need/)
-
-2. [微服務架構 #1, WHY Microservices?](https://columns.chicken-house.net/2016/09/15/microservice-case-study-01/)
+1. [Docker Stack](./docker-stack.yml)
 
 
-### Bitbucket Pipeline
+### CI / CD
 
-```yaml=
-# Set PIPELINES Environment variables: $ACR_LOGIN_SERVER, $ACR_USERNAME, $ACR_PASSWORD
-# Auto unit test app server, and build docker image. Finally, push docker image to registry.
-
-# Maintainer: Raylios Ming
-# Date: 2019-01-09
-
-# Registry: Azure Container Registry
-# Environment: Test & Demo Env
-
-options:
-  docker: true
-
-definitions:
-  steps:
-    - step: &Unit-test-step
-        name: Server Unit Test
-        script:
-          - export username=$SERVER_USERNAME
-          - export password=$SERVER_PASSWORD
-          - export config=test
-
-          - apk add --no-cache py-gevent
-          - pip install --default-timeout=100 --no-cache-dir -r requirements.txt
-          - pytest -v --durations=0 --cov-config=./tests/.coverage --cov=./app --cov-report term-missing
-
-pipelines:
-  branches:
-    master:
-      - step: *Unit-test-step
-      - step:
-          name: Deploy Demo Env
-          deployment: staging
-          trigger: manual
-          services:
-            - docker
-          script:
-            - export SERVER_NAME="dash-api"
-            - export TAG_ANME="demo-env"
-            - export IMAGE_NAME=$ACR_LOGIN_SERVER/$SERVER_NAME:$TAG_ANME
-
-            - docker build -t $IMAGE_NAME .
-            - docker login --username $ACR_USERNAME --password $ACR_PASSWORD $ACR_LOGIN_SERVER
-            - docker push $IMAGE_NAME
-            - docker logout $ACR_LOGIN_SERVER
-
-    feature/*:
-      - step: *Unit-test-step
-      - step:
-          name: Deploy Test Env
-          deployment: test
-          services:
-            - docker
-          script:
-            - export SERVER_NAME="dash-api"
-            - export TAG_ANME="test-env"
-            - export IMAGE_NAME=$ACR_LOGIN_SERVER/$SERVER_NAME:$TAG_ANME
-
-            - docker build -t $IMAGE_NAME .
-            - docker login --username $ACR_USERNAME --password $ACR_PASSWORD $ACR_LOGIN_SERVER
-            - docker push $IMAGE_NAME
-            - docker logout $ACR_LOGIN_SERVER
-```
-
-### TravisCI
+1. [Bitbucket Pipeline](./bitbucket-pipelines.yml)
 
 
 ## Troubleshooting
 
 1. [Install and start rsyslog on Ubuntu Linux](https://www.rsyslog.com/tag/ubuntu/)
 
-2. [Alpine shell can't find file in docker](https://serverfault.com/questions/883625/alpine-shell-cant-find-file-in-docker)
+1. [Alpine shell can't find file in docker](https://serverfault.com/questions/883625/alpine-shell-cant-find-file-in-docker)
 
-3. [Docker Containers can not be stopped or removed - permission denied Error]()
+1. [Gevent doesn't install in the alpine-python](https://github.com/jfloff/alpine-python/issues/17)
 
-4. [Gevent doesn't install in the alpine-python](https://github.com/jfloff/alpine-python/issues/17)
+1. [Swarm mode not load balancing](https://forums.docker.com/t/swarm-mode-not-load-balancing/24764)
 
-5. [Swarm mode not load balancing](https://forums.docker.com/t/swarm-mode-not-load-balancing/24764)
+1. [Python-alpine cffi package dependencies missing](https://github.com/gliderlabs/docker-alpine/issues/297)
 
-6. [Python-alpine cffi package dependencies missing](https://github.com/gliderlabs/docker-alpine/issues/297)
-
-7. [Stuck in rsyslogd process after run the image](https://github.com/nimmis/docker-alpine-micro/issues/1)
-
+1. [Stuck in rsyslogd process after run the image](https://github.com/nimmis/docker-alpine-micro/issues/1)
